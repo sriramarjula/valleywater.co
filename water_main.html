@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valley Water Co. — Edinburg, Texas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Lora:ital,wght@0,400;0,600;1,400&family=Barlow:wght@300;400;500&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* ── RESET & VARIABLES ── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --orange:      #E8611A;
+      --orange-lt:   #F5A623;
+      --blue:        #0A4C7F;
+      --blue-dk:     #063352;
+      --cream:       #FDF8F2;
+      --sand:        #F2EBE0;
+      --text:        #1A1A1A;
+      --muted:       #7A7060;
+      --white:       #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--cream); }
+    ::-webkit-scrollbar-thumb { background: var(--orange); border-radius: 3px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 60px;
+      background: rgba(253,248,242,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,97,26,0.1);
+      transition: box-shadow 0.3s;
+    }
+
+    nav:hover { box-shadow: 0 4px 30px rgba(232,97,26,0.08); }
+
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+    }
+    .nav-logo .big  { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; color: var(--orange); letter-spacing: 2px; }
+    .nav-logo .small{ font-family: 'Barlow Condensed', sans-serif; font-size: 0.6rem; letter-spacing: 4px; color: var(--blue); text-transform: uppercase; }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+
+    /* Animated background ripple circles */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid rgba(232,97,26,0.12);
+      animation: rippleOut 8s ease-out infinite;
+    }
+    .ripple:nth-child(1) { width: 300px; height: 300px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0s; }
+    .ripple:nth-child(2) { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1.5s; }
+    .ripple:nth-child(3) { width: 700px; height: 700px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 3s; }
+    .ripple:nth-child(4) { width: 900px; height: 900px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 4.5s; }
+
+    @keyframes rippleOut {
+      0%   { opacity: 0.6; transform: translate(-50%,-50%) scale(0.8); }
+      100% { opacity: 0;   transform: translate(-50%,-50%) scale(1.3); }
+    }
+
+    .hero-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 14vw, 12rem);
+      line-height: 0.9;
+      color: var(--blue);
+      animation: fadeUp 0.8s 0.1s ease both;
+      position: relative;
+    }
+    .hero-title span { color: var(--orange); }
+
+    .hero-sub {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: var(--muted);
+      margin-top: 24px;
+      max-width: 480px;
+      line-height: 1.7;
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+
+    .hero-location {
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: fadeUp 0.8s 0.3s ease both;
+    }
+    .hero-location .dot {
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+    }
+    .hero-location span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* Sun SVG in hero */
+    .hero-sun {
+      width: 80px; height: 80px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.8s ease both, spinSlow 20s linear infinite;
+    }
+    @keyframes spinSlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeUp 1s 1s ease both;
+    }
+    .scroll-hint span {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .scroll-line {
+      width: 1px; height: 40px;
+      background: linear-gradient(to bottom, var(--orange), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100%{opacity:0.3} 50%{opacity:1} }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(20px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 120px 60px; }
+
+    .section-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      color: var(--blue);
+    }
+
+    /* ── STORY / ORIGIN ── */
+    #story {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .story-text p {
+      font-family: 'Lora', serif;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-top: 24px;
+    }
+    .story-text p + p { margin-top: 16px; }
+
+    .story-visual {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Big decorative drop */
+    .big-drop {
+      width: 260px;
+      height: 300px;
+      position: relative;
+    }
+    .big-drop svg { width: 100%; height: 100%; filter: drop-shadow(0 20px 60px rgba(10,76,127,0.15)); }
+
+    /* Floating stat cards */
+    .stat-card {
+      position: absolute;
+      background: var(--white);
+      border: 1px solid rgba(232,97,26,0.15);
+      border-radius: 12px;
+      padding: 16px 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+    }
+    .stat-card .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .stat-card .lbl {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stat-card:nth-child(2) { top: 10%; right: -20px; }
+    .stat-card:nth-child(3) { bottom: 15%; left: -20px; }
+
+    /* ── MISSION ── */
+    #mission {
+      background: var(--blue);
+      text-align: center;
+      padding: 140px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    #mission h2 { color: var(--white); }
+
+    .mission-quote {
+      font-family: 'Lora', serif;
+      font-style: italic;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      color: rgba(255,255,255,0.85);
+      max-width: 780px;
+      margin: 32px auto 0;
+      line-height: 1.75;
+    }
+    .mission-quote strong {
+      color: var(--orange-lt);
+      font-style: normal;
+      font-weight: 600;
+    }
+
+    /* Decorative orange arc */
+    .mission-arc {
+      position: absolute;
+      bottom: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      border-radius: 50%;
+      border: 1px solid rgba(232,97,26,0.2);
+      pointer-events: none;
+    }
+    .mission-arc-2 {
+      bottom: -300px;
+      width: 900px; height: 500px;
+      border-color: rgba(232,97,26,0.1);
+    }
+
+    /* ── VISION ── */
+    #vision {
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .vision-card {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 40px;
+      border-left: 4px solid var(--orange);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .vision-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(232,97,26,0.12);
+    }
+    .vision-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      color: var(--orange);
+      letter-spacing: 1px;
+      margin-bottom: 14px;
+    }
+    .vision-card p {
+      font-family: 'Lora', serif;
+      font-size: 0.98rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .vision-cards { display: flex; flex-direction: column; gap: 24px; }
+
+    /* ── PRODUCTS ── */
+    #products {
+      background: var(--white);
+      text-align: center;
+    }
+    #products h2 { margin-bottom: 12px; }
+    #products .intro {
+      font-family: 'Barlow', sans-serif;
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 500px;
+      margin: 0 auto 60px;
+      line-height: 1.7;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      border-radius: 20px;
+      padding: 40px 24px 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+    }
+
+    .pc-pure        { background: #EEF6FC; }
+    .pc-flavored    { background: #FFF3E5; }
+    .pc-electrolyte { background: #EAF0F8; }
+    .pc-energy      { background: #1C1C1C; }
+
+    .product-icon { width: 60px; height: 70px; }
+
+    .product-card h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
+    .pc-pure h3        { color: var(--blue); }
+    .pc-flavored h3    { color: var(--orange); }
+    .pc-electrolyte h3 { color: var(--blue); }
+    .pc-energy h3      { color: var(--orange); }
+
+    .product-card p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      text-align: center;
+    }
+    .pc-pure p, .pc-flavored p, .pc-electrolyte p { color: var(--muted); }
+    .pc-energy p { color: rgba(255,255,255,0.5); }
+
+    .product-tag {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-top: auto;
+    }
+    .tag-pure        { background: rgba(10,76,127,0.1);  color: var(--blue); }
+    .tag-flavored    { background: rgba(232,97,26,0.12); color: var(--orange); }
+    .tag-electrolyte { background: rgba(10,76,127,0.1);  color: var(--blue); }
+    .tag-energy      { background: rgba(232,97,26,0.2);  color: var(--orange-lt); }
+
+    /* ── LOCAL ROOTS ── */
+    #local {
+      background: var(--orange);
+      text-align: center;
+      padding: 120px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    #local h2 { color: var(--white); }
+    #local .section-label { color: rgba(255,255,255,0.6); }
+
+    .local-text {
+      font-family: 'Lora', serif;
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 640px;
+      margin: 28px auto 0;
+      line-height: 1.85;
+    }
+
+    .local-stats {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      margin-top: 64px;
+    }
+    .local-stat .n {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3.5rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .local-stat .l {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      margin-top: 4px;
+    }
+
+    /* Background waves */
+    .local-wave {
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+      pointer-events: none;
+    }
+    .local-wave-2 {
+      bottom: -120px; left: -120px;
+      width: 700px; height: 700px;
+    }
+
+    /* ── VENDING / IDENTITY ── */
+    #identity {
+      background: var(--cream);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .identity-text p {
+      font-family: 'Lora', serif;
+      font-size: 1rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-top: 24px;
+    }
+
+    .identity-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .id-card {
+      border-radius: 16px;
+      padding: 28px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .id-card:nth-child(1) { background: var(--blue); color: white; }
+    .id-card:nth-child(2) { background: var(--sand); }
+    .id-card:nth-child(3) { background: var(--sand); }
+    .id-card:nth-child(4) { background: var(--orange); color: white; }
+
+    .id-card .ic-icon { font-size: 1.5rem; }
+    .id-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      letter-spacing: 1px;
+    }
+    .id-card:nth-child(1) h4 { color: var(--orange-lt); }
+    .id-card:nth-child(2) h4, .id-card:nth-child(3) h4 { color: var(--blue); }
+    .id-card:nth-child(4) h4 { color: var(--white); }
+    .id-card p {
+      font-size: 0.8rem;
+      line-height: 1.6;
+    }
+    .id-card:nth-child(1) p { color: rgba(255,255,255,0.65); }
+    .id-card:nth-child(2) p, .id-card:nth-child(3) p { color: var(--muted); }
+    .id-card:nth-child(4) p { color: rgba(255,255,255,0.75); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue-dk);
+      padding: 80px 60px 40px;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .big  { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; color: var(--orange); letter-spacing: 2px; }
+    .footer-brand .small{ font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 4px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+    .footer-brand p {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      margin-top: 16px;
+      max-width: 260px;
+    }
+
+    .footer-col h5 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li {
+      font-size: 0.88rem;
+      line-height: 2;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 32px;
+    }
+    .footer-bottom span {
+      font-size: 0.78rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 18px 28px; }
+      .nav-links { display: none; }
+      section { padding: 80px 28px; }
+      #story, #vision, #identity { grid-template-columns: 1fr; gap: 48px; }
+      .products-grid { grid-template-columns: 1fr 1fr; }
+      .local-stats { gap: 40px; flex-wrap: wrap; }
+      .footer-top { flex-direction: column; gap: 40px; }
+      .story-visual { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .products-grid { grid-template-columns: 1fr; }
+      .identity-visual { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV ── -->
+  <nav>
+    <div class="nav-logo">
+      <span class="big">VALLEY</span>
+      <span class="small">Water Co.</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#mission">Mission</a></li>
+      <li><a href="#products">Products</a></li>
+      <li><a href="#local">Local</a></li>
+      <li><a href="#identity">Community</a></li>
+    </ul>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="ripple"></div>
+      <div class="ripple"></div>
+      <div class="ripple"></div>
+      <div class="ripple"></div>
+    </div>
+
+    <!-- Spinning sun -->
+    <svg class="hero-sun" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="40" cy="40" r="16" fill="#E8611A"/>
+      <g stroke="#E8611A" stroke-width="3" stroke-linecap="round">
+        <line x1="40" y1="6"  x2="40" y2="16"/>
+        <line x1="40" y1="64" x2="40" y2="74"/>
+        <line x1="6"  y1="40" x2="16" y2="40"/>
+        <line x1="64" y1="40" x2="74" y2="40"/>
+        <line x1="16" y1="16" x2="23" y2="23"/>
+        <line x1="57" y1="57" x2="64" y2="64"/>
+        <line x1="64" y1="16" x2="57" y2="23"/>
+        <line x1="23" y1="57" x2="16" y2="64"/>
+      </g>
+    </svg>
+
+    <p class="hero-eyebrow">Born in the Rio Grande Valley</p>
+
+    <h1 class="hero-title">
+      VALLEY<br><span>WATER</span><br>CO.
+    </h1>
+
+    <p class="hero-sub">
+      Pure water, local pride. Crafted for the heat of South Texas — and the people who call it home.
+    </p>
+
+    <div class="hero-location">
+      <div class="dot"></div>
+      <span>Edinburg, Texas · Est. 2025</span>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ── STORY ── -->
+  <section id="story">
+    <div class="story-text">
+      <span class="section-label">Our Story</span>
+      <h2>BORN FROM<br>THE VALLEY</h2>
+      <p>
+        Edinburg, Texas sits in the heart of the Rio Grande Valley — where the sun blazes, the community thrives, and the need for clean, refreshing hydration is felt every single day. Valley Water Co. was built right here, for the people right here.
+      </p>
+      <p>
+        We noticed something simple: the shelves were full of brands from elsewhere — brands that had never seen a Valley summer, never felt that 105°F afternoon heat, never understood what it means to truly need a cold, clean drink. So we built our own.
+      </p>
+      <p>
+        Valley Water Co. is more than a beverage company. It's a local brand that belongs to this community — a brand you'll recognize from your neighborhood, your campus, and your corner store.
+      </p>
+    </div>
+
+    <div class="story-visual">
+      <div class="big-drop">
+        <svg viewBox="0 0 260 300" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="dropGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#b8dcf0"/>
+              <stop offset="100%" style="stop-color:#0A4C7F;stop-opacity:0.6"/>
+            </linearGradient>
+          </defs>
+          <path d="M130 20 Q200 100 200 180 A70 70 0 0 1 60 180 Q60 100 130 20Z" fill="url(#dropGrad)"/>
+          <path d="M105 200 Q120 230 150 210" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.5"/>
+          <!-- Palm tree silhouette inside drop -->
+          <line x1="130" y1="230" x2="130" y2="160" stroke="white" stroke-width="2" opacity="0.3"/>
+          <ellipse cx="130" cy="160" rx="18" ry="10" fill="white" opacity="0.2"/>
+        </svg>
+      </div>
+
+      <div class="stat-card">
+        <div class="num">100K+</div>
+        <div class="lbl">Edinburg Residents</div>
+      </div>
+      <div class="stat-card">
+        <div class="num">105°F</div>
+        <div class="lbl">Peak Summer Heat</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── MISSION ── -->
+  <section id="mission">
+    <div class="mission-arc"></div>
+    <div class="mission-arc mission-arc-2"></div>
+    <span class="section-label" style="color:rgba(255,255,255,0.4)">Mission Statement</span>
+    <h2>OUR MISSION</h2>
+    <p class="mission-quote">
+      "To hydrate and energize the <strong>Rio Grande Valley community</strong> by delivering affordable, high-quality, and locally rooted water-based beverages that reflect the <strong>culture, spirit, and pride</strong> of South Texas."
+    </p>
+  </section>
+
+  <!-- ── VISION ── -->
+  <section id="vision">
+    <div>
+      <span class="section-label">Vision</span>
+      <h2>WHERE WE'RE<br>HEADED</h2>
+      <p style="font-family:'Lora',serif; font-size:1rem; color:var(--muted); margin-top:24px; line-height:1.9;">
+        We see a future where Valley Water Co. is the first name that comes to mind when anyone in the Rio Grande Valley reaches for a drink. A truly local brand — on every shelf, in every home, at every game.
+      </p>
+    </div>
+
+    <div class="vision-cards">
+      <div class="vision-card">
+        <h3>Short Term</h3>
+        <p>Launch our full product line across Edinburg and establish vending machine presence in UTRGV, parks, gyms, and shopping centers to build immediate brand recognition.</p>
+      </div>
+      <div class="vision-card">
+        <h3>Mid Term</h3>
+        <p>Secure shelf space in H-E-B, Walmart, and local convenience stores. Capture 15% of Hidalgo County's bottled water market.</p>
+      </div>
+      <div class="vision-card">
+        <h3>Long Term</h3>
+        <p>Expand distribution across the entire Rio Grande Valley and become the premier locally-owned beverage brand in South Texas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PRODUCTS ── -->
+  <section id="products">
+    <span class="section-label">What We Offer</span>
+    <h2>OUR PRODUCTS</h2>
+    <p class="intro">Five refreshing ways to stay hydrated — each one crafted for the Valley lifestyle.</p>
+
+    <div class="products-grid">
+
+      <!-- Pure Water -->
+      <div class="product-card pc-pure">
+        <svg class="product-icon" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 Q50 25 50 45 A20 20 0 0 1 10 45 Q10 25 30 5Z" fill="#0A4C7F" opacity="0.7"/>
+          <path d="M22 50 Q28 58 36 52" stroke="white" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+        <h3>Pure Water</h3>
+        <p>Clean, purified drinking water. Nothing added, nothing taken away. Just pure hydration.</p>
+        <span class="product-tag tag-pure">500 ML</span>
+      </div>
+
+      <!-- Flavored -->
+      <div class="product-card pc-flavored">
+        <svg class="product-icon" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 Q50 25 50 45 A20 20 0 0 1 10 45 Q10 25 30 5Z" fill="#E8611A" opacity="0.7"/>
+          <circle cx="22" cy="36" r="4" fill="#F5A623" opacity="0.8"/>
+          <circle cx="36" cy="42" r="3" fill="#F5A623" opacity="0.6"/>
+          <circle cx="30" cy="28" r="2.5" fill="#F5A623" opacity="0.5"/>
+        </svg>
+        <h3>Flavored Water</h3>
+        <p>Mango citrus, watermelon lime, and more. Real flavors inspired by the Valley's own taste.</p>
+        <span class="product-tag tag-flavored">500 ML</span>
+      </div>
+
+      <!-- Carbonated -->
+      <div class="product-card pc-electrolyte">
+        <svg class="product-icon" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 Q50 25 50 45 A20 20 0 0 1 10 45 Q10 25 30 5Z" fill="#0A4C7F" opacity="0.5"/>
+          <circle cx="24" cy="32" r="2" fill="white" opacity="0.6"/>
+          <circle cx="33" cy="25" r="1.5" fill="white" opacity="0.5"/>
+          <circle cx="28" cy="42" r="2.5" fill="white" opacity="0.4"/>
+          <circle cx="38" cy="38" r="1.5" fill="white" opacity="0.5"/>
+          <circle cx="20" cy="44" r="1.5" fill="white" opacity="0.4"/>
+        </svg>
+        <h3>Sparkling Water</h3>
+        <p>Lightly carbonated and crisp. All the refreshment of soda — none of the sugar.</p>
+        <span class="product-tag tag-electrolyte">500 ML</span>
+      </div>
+
+      <!-- Energy -->
+      <div class="product-card pc-energy">
+        <svg class="product-icon" viewBox="0 0 60 70" xmlns="http://www.w3.org/2000/svg">
+          <path d="M30 5 Q50 25 50 45 A20 20 0 0 1 10 45 Q10 25 30 5Z" fill="#E8611A" opacity="0.8"/>
+          <path d="M33 20 L25 38 L31 38 L27 55 L38 32 L31 32 Z" fill="white" opacity="0.9"/>
+        </svg>
+        <h3>Energy Drink</h3>
+        <p>A Valley-strength boost for students, athletes, and outdoor workers who power through the heat.</p>
+        <span class="product-tag tag-energy">500 ML</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── LOCAL ── -->
+  <section id="local">
+    <div class="local-wave"></div>
+    <div class="local-wave local-wave-2"></div>
+    <span class="section-label">Rooted Here</span>
+    <h2 style="color:white">THE VALLEY<br>IS HOME</h2>
+    <p class="local-text">
+      The Rio Grande Valley is one of the fastest-growing regions in Texas — young, vibrant, and deeply community-driven. Valley Water Co. is built from the ground up to serve this community. We're not a national brand that ships product down here. We are from here.
+    </p>
+    <div class="local-stats">
+      <div class="local-stat">
+        <div class="n">900K+</div>
+        <div class="l">Hidalgo County Population</div>
+      </div>
+      <div class="local-stat">
+        <div class="n">27</div>
+        <div class="l">Median Age in Edinburg</div>
+      </div>
+      <div class="local-stat">
+        <div class="n">105°F</div>
+        <div class="l">Summer Peak Temperature</div>
+      </div>
+      <div class="local-stat">
+        <div class="n">5</div>
+        <div class="l">Product Variants</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IDENTITY / VENDING ── -->
+  <section id="identity">
+    <div class="identity-text">
+      <span class="section-label">Community Presence</span>
+      <h2>BUILDING A<br>LOCAL BRAND</h2>
+      <p>
+        Our vending machines aren't just about selling water — they're about planting our flag in the community. When you see a Valley Water Co. machine at UTRGV, at Bert Ogden Arena, or at your local park, you know us. And when you walk into H-E-B and see our bottle on the shelf, it already feels familiar.
+      </p>
+      <p>
+        That's the power of local identity. Big brands can't buy it. We earned it by showing up.
+      </p>
+    </div>
+
+    <div class="identity-visual">
+      <div class="id-card">
+        <div class="ic-icon">🎓</div>
+        <h4>UTRGV Campus</h4>
+        <p>Reaching students across the university every single day.</p>
+      </div>
+      <div class="id-card">
+        <div class="ic-icon">🏟️</div>
+        <h4>Bert Ogden Arena</h4>
+        <p>Present at Edinburg's premier entertainment venue.</p>
+      </div>
+      <div class="id-card">
+        <div class="ic-icon">🌳</div>
+        <h4>Parks & Community</h4>
+        <p>Hydrating families where they relax and play.</p>
+      </div>
+      <div class="id-card">
+        <div class="ic-icon">🛒</div>
+        <h4>H-E-B & Retail</h4>
+        <p>On shelves at the stores the Valley trusts most.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="big">VALLEY</div>
+        <div class="small">Water Co. · Edinburg, TX</div>
+        <p>Hydrating the Rio Grande Valley — one bottle at a time.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Products</h5>
+        <ul>
+          <li>Pure Drinking Water</li>
+          <li>Flavored Water</li>
+          <li>Sparkling Water</li>
+          <li>Electrolyte Water</li>
+          <li>Energy Drink</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li>Our Story</li>
+          <li>Mission & Vision</li>
+          <li>Community</li>
+          <li>Contact</li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Location</h5>
+        <ul>
+          <li>Edinburg, Texas</li>
+          <li>Rio Grande Valley</li>
+          <li>Hidalgo County</li>
+          <li>Est. 2025</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Valley Water Co. — Edinburg, Texas</span>
+      <span>Made for the Valley. By the Valley.</span>
+    </div>
+  </footer>
+
+</body>
+</html>
